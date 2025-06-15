@@ -1,0 +1,114 @@
+"""
+1. Usando uma API de Taxas de Câmbio (Mais Direto e Seguro)
+Primeiro, você pode usar uma API gratuita como a ExchangeRate API ou a Currency Layer API.
+Aqui está um exemplo básico de como implementar isso:
+
+Código com API:
+python
+"""
+import requests
+
+class ConversorDeMoedaAPI:
+    def __init__(self, valor, moeda_destino):
+        self.valor = valor
+        self.moeda_destino = moeda_destino
+        self.url = f"https://api.exchangerate.host/latest"
+        self.taxa_cambio = 0
+
+    def obter_taxa_cambio(self):
+        try:
+            resposta = requests.get(self.url)
+            dados = resposta.json()
+            self.taxa_cambio = dados["rates"].get(self.moeda_destino, 0)
+            if self.taxa_cambio == 0:
+                print("Erro: Moeda não encontrada!")
+            return self.taxa_cambio
+        except Exception as e:
+            print("Erro ao buscar taxas de câmbio:", e)
+            return 0
+
+    def converter(self):
+        if self.taxa_cambio:
+            valor_convertido = self.valor * self.taxa_cambio
+            print(f"Com {self.valor:.2f} em reais, você pode comprar {valor_convertido:.2f} {self.moeda_destino}.")
+        else:
+            print("Não foi possível realizar a conversão.")
+
+if __name__ == "__main__":
+    valor = float(input("Digite o valor em reais: R$ "))
+    moeda_destino = input("Digite o código da moeda de destino (ex: USD, EUR): ").upper()
+    
+    conversor = ConversorDeMoedaAPI(valor, moeda_destino)
+    conversor.obter_taxa_cambio()
+    conversor.converter()
+"""   
+Explicação:
+Instale o requests: Se ainda não instalou, use pip install requests.
+URL da API: Aqui, usamos a https://api.exchangerate.host para buscar as cotações em tempo real.
+Código da Moeda: O usuário insere o código da moeda (como USD ou EUR).
+Conversão Simples: Multiplica o valor pelo câmbio retornado pela API.
+"""
+
+
+"""
+2. Usando Selenium para Web Scraping (Quando APIs não estão disponíveis)
+O Selenium pode ser usado para buscar informações diretamente de sites, mas lembre-se de que isso requer mais 
+cuidados para evitar bloquear acessos ao site.
+
+Código com Selenium:
+python
+"""
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
+import time
+
+class ConversorDeMoedaSelenium:
+    def __init__(self, valor, moeda_destino):
+        self.valor = valor
+        self.moeda_destino = moeda_destino
+        self.driver = webdriver.Chrome()  # Certifique-se de que o ChromeDriver está configurado
+
+    def buscar_taxa(self):
+        try:
+            self.driver.get("https://www.google.com/")
+            time.sleep(2)
+
+            # Procurando a taxa de câmbio no Google
+            barra_pesquisa = self.driver.find_element(By.NAME, "q")
+            barra_pesquisa.send_keys(f"{self.moeda_destino} para BRL")
+            barra_pesquisa.send_keys(Keys.RETURN)
+            time.sleep(2)
+
+            # Captura do valor de câmbio
+            taxa = self.driver.find_element(By.XPATH, "//*[contains(text(),'1')]").text
+            taxa_cambio = float(taxa.split()[3])  # Ajuste conforme o formato
+            return taxa_cambio
+        except Exception as e:
+            print("Erro ao buscar taxa de câmbio:", e)
+            return 0
+        finally:
+            self.driver.quit()
+
+    def converter(self):
+        taxa_cambio = self.buscar_taxa()
+        if taxa_cambio:
+            valor_convertido = self.valor / taxa_cambio
+            print(f"Com {self.valor:.2f} em reais, você pode comprar {valor_convertido:.2f} {self.moeda_destino}.")
+        else:
+            print("Não foi possível realizar a conversão.")
+
+if __name__ == "__main__":
+    valor = float(input("Digite o valor em reais: R$ "))
+    moeda_destino = input("Digite o código da moeda de destino (ex: USD, EUR): ").upper()
+    
+    conversor = ConversorDeMoedaSelenium(valor, moeda_destino)
+    conversor.converter()
+
+"""    
+Explicação:
+Instale o Selenium: pip install selenium.
+Driver do Navegador: Baixe e configure o ChromeDriver.
+Busca no Google: O script busca a taxa de câmbio diretamente no Google.
+Riscos: Web scraping é menos confiável do que APIs e pode ser bloqueado por sites.
+"""

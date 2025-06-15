@@ -1,0 +1,195 @@
+
+""" 
+Crie um script python que leia dois números e tente mostrar a soma entre eles. 
+""" 
+
+def somar(n1, n2): 
+    soma n1 + n2 
+    return soma 
+    
+    def mostrar_soma(soma): 
+    print(f"A soma dos valores é = {soma}.") 
+    # Programa principal 
+    somar
+    n1 = int(input("Digite o primeiro valor: ")), 
+    n2 = int(input("Digite o segundo valor)))
+_________________________________________________________________
+
+
+
+
+def somar(n1, n2):
+    soma = n1 + n2
+    return soma
+
+def mostrar_soma(soma):
+    print(f"A soma dos valores é = {soma}.")
+
+# Programa principal
+n1 = int(input("Digite o primeiro valor: "))
+n2 = int(input("Digite o segundo valor: "))
+
+soma = somar(n1, n2)
+mostrar_soma(soma)
+
+def somar(n1, n2):
+    # A função 'somar' recebe dois números como parâmetros e retorna a soma desses números
+    soma = n1 + n2
+    return soma
+
+def mostrar_soma(soma):
+    # A função 'mostrar_soma' recebe um valor de soma e imprime uma mensagem com o resultado
+    print(f"A soma dos valores é = {soma}.")
+
+# Programa principal
+# Solicita ao usuário para inserir o primeiro valor e converte a entrada para um número inteiro
+n1 = int(input("Digite o primeiro valor: "))
+
+# Solicita ao usuário para inserir o segundo valor e converte a entrada para um número inteiro
+n2 = int(input("Digite o segundo valor: "))
+
+# Chama a função 'somar' passando os valores n1 e n2 e armazena o resultado na variável 'soma'
+soma = somar(n1, n2)
+
+# Chama a função 'mostrar_soma' para exibir o resultado da soma
+mostrar_soma(soma)
+
+
+Quando soma = somar(n1, n2) está passando uma tupla é isto ou nada aver?
+Na verdade, não está passando uma tupla. A linha soma = somar(n1, n2) está chamando a função somar e passando os dois números n1 e n2 como argumentos individuais. 
+A função somar então retorna a soma dos dois números, que é atribuída à variável soma.
+
+Aqui está um passo a passo de como funciona:
+
+O usuário insere dois números inteiros n1 e n2.
+
+A função somar(n1, n2) é chamada com esses dois números como argumentos.
+
+Dentro da função somar, a soma de n1 e n2 é calculada e retornada.
+
+O valor retornado é atribuído à variável soma.
+
+A função mostrar_soma(soma) é chamada para exibir a soma.
+_____________________________________________________________________________
+
+
+
+
+
+class Somando:
+    def __init__(self):
+        self.num1 = 0
+        self.num2 = 0
+        self.soma = 0
+
+    def primeiro_val(self):
+        self.num1 = int(input("Primeiro valor: "))
+
+    def segundo_val(self):
+        self.num2 = int(input("Segundo valor: "))
+
+    def somar_val(self):
+        self.soma = self.num1 + self.num2
+        return self.soma
+
+    def mostrar_val(self):
+        print(f"A soma dos valores é = {self.soma}.")
+
+# Programa principal
+somando = Somando()
+somando.primeiro_val()
+somando.segundo_val()
+somando.somar_val()
+somando.mostrar_val()
+________________________________________________________________
+
+
+def somar(n1, n2):
+    return n1 + n2
+
+n1 = int(input("Digite o primeiro valor: "))
+n2 = int(input("Digite o segundo valor: "))
+resultado = somar(n1, n2)
+print(f"A soma dos valores é = {resultado}.")
+Aqui, a função somar recebe n1 e n2 como argumentos e retorna a soma. 
+Os valores n1 e n2 são passados explicitamente na chamada da função.
+
+
+
+
+Método dentro da classe
+
+class Somando:
+    def __init__(self):
+        self.num1 = 0
+        self.num2 = 0
+        self.soma = 0
+
+    def primeiro_val(self):
+        self.num1 = int(input("Primeiro valor: "))
+
+    def segundo_val(self):
+        self.num2 = int(input("Segundo valor: "))
+
+    def somar_val(self):
+        self.soma = self.num1 + self.num2
+        return self.soma
+
+    def mostrar_val(self):
+        print(f"A soma dos valores é = {self.soma}.")
+
+# Programa principal
+somando = Somando()
+somando.primeiro_val()
+somando.segundo_val()
+somando.somar_val()
+somando.mostrar_val()
+Aqui, os métodos primeiro_val, segundo_val, somar_val, e mostrar_val são definidos dentro da classe Somando. 
+Eles utilizam o self para acessar e modificar os atributos da instância (self.num1, self.num2, self.soma).
+
+
+
+Quando usar funções:
+Tarefas simples e repetitivas: Se você tem uma operação simples que precisa ser repetida em várias partes do seu código, uma função pode ser a melhor escolha.
+
+Código modular: Funções ajudam a dividir seu código em blocos menores e mais gerenciáveis, facilitando a leitura e manutenção.
+
+Sem estado compartilhado: Use funções quando não há necessidade de manter ou compartilhar estado entre diferentes chamadas de função.
+
+Exemplo:
+
+def somar(n1, n2):
+    return n1 + n2
+
+resultado = somar(3, 5)
+print(resultado)
+Quando usar classes:
+Lidar com dados complexos: Se você está lidando com dados que possuem múltiplos atributos e comportamento associado, classes são ideais.
+
+Estado compartilhado e persistente: Classes permitem que você armazene e manipule o estado do objeto de forma organizada.
+
+Reusabilidade e extensibilidade: Classes permitem herança e polimorfismo, facilitando a extensão e reutilização do código.
+
+Exemplo:
+
+
+class Somando:
+    def __init__(self, n1, n2):
+        self.num1 = n1
+        self.num2 = n2
+        self.soma = 0
+
+    def somar(self):
+        self.soma = self.num1 + self.num2
+        return self.soma
+
+    def mostrar(self):
+        print(f"A soma dos valores é = {self.soma}.")
+
+somando = Somando(3, 5)
+somando.somar()
+somando.mostrar()
+Resumindo:
+Funções: Use para operações simples e quando não precisa manter estado.
+
+Classes: Use para encapsular dados e comportamento, especialmente em programas mais complexos.

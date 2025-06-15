@@ -1,0 +1,199 @@
+"""
+Excelente pergunta! 
+A melhor localização para implantar as funções de leitura e escrita de dados (para arquivos ou banco de dados) depende do 
+fluxo do seu programa e de quando você precisa salvar e carregar as informações. 
+Aqui estão algumas sugestões de onde integrar essas funcionalidades no seu código atual, mantendo a estrutura de classes que você criou:
+
+Considerando a Classe GerenciadorDeDados:
+A classe GerenciadorDeDados parece um bom lugar para centralizar as operações de leitura e escrita de dados, já 
+que ela lida com a entrada do usuário. Você pode adicionar métodos estáticos ou de instância a esta classe para salvar e carregar os dados.
+
+Opção 1: 
+Adicionando Métodos Estáticos ao GerenciadorDeDados:
+Se você não precisa manter um estado específico para o gerenciamento de dados (como uma conexão de banco de dados aberta durante toda a execução), 
+métodos estáticos podem ser adequados.
+"""
+
+#Python
+
+from InquirerPy import prompt
+import csv  # Ou json, sqlite3
+
+class AluguelDeCarro:
+    def __init__(self, nome, dia, km, marca, modelo):
+        self.nome = nome
+        self.dia = dia
+        self.km = km
+        self.marca = marca
+        self.modelo = modelo
+        self.valor_total = 0
+
+    def calcula_valor(self):
+        pass # ... (seu código de cálculo) ...
+        return self.valor_total
+
+    def mostrar_valor(self):
+        pass # ... (seu código de exibição) ...
+
+
+class GerenciadorDeDados:
+    @staticmethod
+    def ler_nome_cliente():
+        pass  # ... (seu código de leitura do nome) ...
+
+    @staticmethod
+    def ler_dias_alugado():
+        pass  # ... (seu código de leitura dos dias) ...
+
+    @staticmethod
+    def ler_quilometragem():
+        pass  # ... (seu código de leitura da km) ...
+
+    @staticmethod
+    def escolher_marca_modelo():
+        pass  # ... (seu código de escolha de marca/modelo) ...
+
+    @staticmethod
+    def salvar_cliente_csv(aluguel):
+        with open('clientes.csv', 'a', newline='') as arquivo:
+            writer = csv.writer(arquivo)
+            writer.writerow([aluguel.nome, aluguel.dia, aluguel.km, aluguel.marca, aluguel.modelo, aluguel.valor_total])
+        print("Dados do cliente salvos em CSV com sucesso!")
+
+    @staticmethod
+    def ler_clientes_csv():
+        clientes = []
+        try:
+            with open('clientes.csv', 'r', newline='') as arquivo:
+                reader = csv.reader(arquivo)
+                next(reader, None)  # Pular o cabeçalho
+                for linha in reader:
+                    if linha:
+                        nome, dia, km, marca, modelo, valor_total = linha
+                        cliente = AluguelDeCarro(nome, int(dia), int(km), marca, modelo)
+                        cliente.valor_total = float(valor_total)
+                        clientes.append(cliente)
+        except FileNotFoundError:
+            print("Arquivo de clientes não encontrado.")
+        return clientes
+
+# Programa principal
+if __name__ == "__main__":
+    # No início do programa, você pode tentar carregar os clientes existentes
+    lista_de_clientes = GerenciadorDeDados.ler_clientes_csv()
+    for cliente in lista_de_clientes:
+        cliente.mostrar_valor() # Exibe os clientes carregados (opcional)
+
+    while True:
+        gerenciador = GerenciadorDeDados() # Você ainda pode instanciar se preferir
+
+        nome = gerenciador.ler_nome_cliente()
+        dia = gerenciador.ler_dias_alugado()
+        km = gerenciador.ler_quilometragem()
+        marca, modelo = gerenciador.escolher_marca_modelo()
+
+        aluguel = AluguelDeCarro(nome, dia, km, marca, modelo)
+        aluguel.calcula_valor()
+        aluguel.mostrar_valor()
+
+        # Após processar um aluguel, você pode salvar os dados
+        GerenciadorDeDados.salvar_cliente_csv(aluguel)
+
+        parar = input("Cadastrar novo cliente? (s/n): ").strip().lower()
+        if parar == "n":
+            break
+
+"""
+Opção 2: 
+Adicionando Métodos de Instância ao GerenciadorDeDados:
+Se você preferir manter a consistência de instanciar o GerenciadorDeDados, pode adicionar os métodos como métodos de instância. 
+Isso pode ser útil se você planeja adicionar funcionalidades que exigem um estado do gerenciador.
+"""
+# Python
+
+class GerenciadorDeDados:
+    def __init__(self, nome_arquivo='clientes.csv'): # Exemplo com arquivo CSV
+        self.nome_arquivo = nome_arquivo
+
+    def ler_nome_cliente(self):
+        pass # ...
+
+    def ler_dias_alugado(self):
+        pass # ...
+
+    def ler_quilometragem(self):
+        pass # ...
+
+    def escolher_marca_modelo(self):
+        pass # ...
+
+    def salvar_cliente(self, aluguel):
+        with open(self.nome_arquivo, 'a', newline='') as arquivo:
+            writer = csv.writer(arquivo)
+            writer.writerow([aluguel.nome, aluguel.dia, aluguel.km, aluguel.marca, aluguel.modelo, aluguel.valor_total])
+        print(f"Dados do cliente salvos em {self.nome_arquivo} com sucesso!")
+
+    def ler_clientes(self):
+        clientes = []
+        try:
+            with open(self.nome_arquivo, 'r', newline='') as arquivo:
+                reader = csv.reader(arquivo)
+                next(reader, None)
+                for linha in reader:
+                    if linha:
+                        nome, dia, km, marca, modelo, valor_total = linha
+                        cliente = AluguelDeCarro(nome, int(dia), int(km), marca, modelo)
+                        cliente.valor_total = float(valor_total)
+                        clientes.append(cliente)
+        except FileNotFoundError:
+            print(f"Arquivo {self.nome_arquivo} não encontrado.")
+        return clientes
+
+# Programa principal
+if __name__ == "__main__":
+    gerenciador = GerenciadorDeDados()
+
+    lista_de_clientes = gerenciador.ler_clientes()
+    for cliente in lista_de_clientes:
+        cliente.mostrar_valor()
+
+    while True:
+        nome = gerenciador.ler_nome_cliente()
+        dia = gerenciador.ler_dias_alugado()
+        km = gerenciador.ler_quilometragem()
+        marca, modelo = gerenciador.escolher_marca_modelo()
+
+        aluguel = AluguelDeCarro(nome, dia, km, marca, modelo)
+        aluguel.calcula_valor()
+        aluguel.mostrar_valor()
+
+        gerenciador.salvar_cliente(aluguel)
+
+        parar = input("Cadastrar novo cliente? (s/n): ").strip().lower()
+        if parar == "n":
+            break
+
+"""        
+Onde Exatamente Implantar as Chamadas das Funções:
+
+Leitura dos Dados Existentes (Carregar Clientes):
+
+No início do seu programa principal (if __name__ == "__main__":), antes do loop while True, você pode chamar a função de leitura 
+(por exemplo, GerenciadorDeDados.ler_clientes_csv() ou gerenciador.ler_clientes()). 
+Isso carregará os dados de clientes que foram salvos em execuções anteriores.
+
+Salvamento dos Dados (Salvar Cliente Atual):
+
+Dentro do loop while True, após criar a instância de AluguelDeCarro e calcular o valor, você pode chamar a função de salvamento (por exemplo, GerenciadorDeDados.
+salvar_cliente_csv(aluguel) ou gerenciador.salvar_cliente(aluguel)). 
+Isso garantirá que os dados do cliente atual sejam persistidos.
+Considerações Adicionais:
+
+Nome do Arquivo/Banco de Dados: Se estiver usando arquivos, defina um nome claro para o arquivo (por exemplo, 'clientes.csv', 'clientes.json', 'clientes.db'). 
+Você pode até tornar o nome do arquivo um parâmetro na inicialização do GerenciadorDeDados.
+Tratamento de Erros: Adicione blocos try...except ao ler os arquivos para lidar com casos em que o arquivo não existe na primeira execução.
+Estrutura dos Dados: Decida qual informação você quer salvar para cada cliente. No exemplo, estamos salvando nome, dias, km, marca, modelo e valor total.
+Frequência de Salvamento: Você pode optar por salvar os dados a cada novo cliente cadastrado ou em intervalos maiores, dependendo da sua necessidade. 
+Salvar a cada cliente garante que você não perderá dados se o programa for interrompido inesperadamente.
+Lembre-se de importar o módulo correto (csv, json, sqlite3) dependendo do método de armazenamento que você escolher.
+"""
