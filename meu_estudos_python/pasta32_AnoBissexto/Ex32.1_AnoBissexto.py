@@ -9,7 +9,7 @@ print("\nAnalisando se o ano é ano bissexto!".upper())
 
 ano = int(input("-->Digite o ano a ser analisado: "))
 
-if ano % 4 == 0 and ano % 100 != 0 and ano % 400 == 0:
+if (ano % 4 == 0 and ano % 100 != 0) or (ano % 400 == 0): #Correção em meu código
     print(f"O ano de {ano} é um ano bissexto!")
 else:
     print(f"O ano de {ano} não é um ano bissexto!\n")

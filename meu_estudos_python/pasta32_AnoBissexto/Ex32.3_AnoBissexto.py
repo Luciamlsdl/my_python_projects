@@ -29,7 +29,7 @@ class AnalisadorDeAnoBissexto:
     def analisa_ano(self):
         if self.ano == 0:
             self.ano = date.today().year
-        if self.ano % 4 == 0 and self.ano % 100 != 0 or self.ano % 400 == 0:
+        if (self.ano % 4 == 0 and self.ano % 100 != 0) or (self.ano % 400 == 0):
             print(f"O ano de {self.ano} é um ano bissexto!")
 
         else:
