@@ -49,7 +49,6 @@ class AumentoDeSalário:
         self.mostrar_aumento()
 
 
-
 #Programa principal
 executar = AumentoDeSalário()
 executar.executador_de_programa()

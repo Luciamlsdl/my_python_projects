@@ -25,7 +25,7 @@ RESET = Style.RESET_ALL # Garante que o estilo volte ao normal, embora autoreset
 
 def limpar_tela():
     """Limpa a tela do console para uma melhor experiência do usuário."""
-    # os.system('cls' if os.name == 'nt' else 'clear') # Descomente se quiser limpar a tela antes da apresentação
+    os.system('cls' if os.name == 'nt' else 'clear') # Descomente se quiser limpar a tela antes da apresentação
 
 
 def apresentacao_do_codigo():
