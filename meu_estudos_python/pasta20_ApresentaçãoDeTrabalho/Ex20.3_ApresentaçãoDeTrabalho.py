@@ -29,6 +29,7 @@ lista_alunos = []
 class ListaDeApresentação:
     def __init__(self):
         self.lista_alunos = []
+        
 
     def adicionar_aluno(self, nome):
         self.lista_alunos.append(nome)
