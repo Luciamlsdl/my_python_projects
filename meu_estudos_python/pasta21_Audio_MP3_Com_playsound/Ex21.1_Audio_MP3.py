@@ -22,7 +22,7 @@ def tocar_musica(caminho_arquivo):
 
 # Programa principal
 
-caminho_da_musica = '/home/lunix/Ambi_conda_python3/pasta21_Audio_MP3_Com_playsound/Nirvana - Inscesticide (1992) By Muro/07 - Son Of A Gun.mp3'
+caminho_da_musica = '/home/lunix/Python_Projects/estudos/estudo_curso_em_video/my_python_projects/meu_estudos_python/pasta21_Audio_MP3_Com_playsound/Nirvana - Inscesticide (1992) By Muro'
 
 tocar_musica(caminho_da_musica)
 print("Música tocando.....")
