@@ -12,7 +12,7 @@ from datetime import date
 data_atual = date.today().year
 
 data_de_nascimento = int(input("Digite seu ano de nascimento (EX. 1995): "))
-idade_atual = data_atual -data_de_nascimento
+idade_atual = data_atual - data_de_nascimento
 
 print(f"Quem nasceu em {data_de_nascimento} tem {idade_atual} anos em {data_atual}.")
 
