@@ -33,7 +33,7 @@ class AlistamentoMilitar:
         self.cpf = 0
         self.email = ""
 
-# Inicializa do código----------------------------------------
+# Inicializa do código limpando a tela----------------------------------------
     def limpar_tela(self):
         os.system("cls" if os.name == "nt" else "clear")
 
@@ -51,19 +51,18 @@ class AlistamentoMilitar:
 
         while True:
             try:
-                self.nome = str(input("Digite o seu nome inteiro: ")).strip().title()
+                entrada = input("Digite o seu nome inteiro: ").strip()
 
-                if not self.nome:
-                    raise ValueError("O nome não pode star vazio. Tente novamente!")
-                    
+                if not entrada:
+                    raise ValueError("O nome não pode estar vazio. Tente novamente!")
 
                 if len(self.nome.split()) < 2:
                     raise ValueError("Digite seu nome completo (nome e sobrenome).")
-                    
 
                 if not padrao_nome.match(self.nome):
                     raise ValueError("O nome contem caracteres inválidos!")
-                    
+                
+                self.nome = str(entrada)    
                 return self.nome.title()
                
             except ValueError as erro:
@@ -110,8 +109,41 @@ class AlistamentoMilitar:
 
 
     def ler_cpf(self):
-        pass
+        while True:
+            
+            entrada = input("Digite o seu cpf EX.(12345678912): ").strip()
 
+            if not entrada:
+                print("O campo não pode estar vazio!")
+                continue
+
+            if not entrada.isdigit():
+                print("Erro: O CPF deve conter apenas números!")
+                continue
+
+            if len(entrada) != 11:
+                print("Erro: O CPFdeve ter exatamente 11 dígitos!")
+                continue
+
+            if entrada == entrada[0] * 11:
+                print("Erro: CPF inválido!")
+                continue
+            
+            soma = sum(int(entrada[i]) * (10 -i) for i in range(9))
+            digito1 = (soma * 10) % 11
+            digito2 = 0 if digito1 == 10 else digito2
+
+            soma = sum(int(entrada[i]) * (11 - i) for i in range(10))
+            digito2 = (soma * 10) % 11
+            digito2 = 0 if digito2 == 10 else digito2
+
+            if not (int(entrada[9]) == digito1 and int(entrada[10]) == digito2):
+                print("Erro: CPF inválido pelos dígitos verificadores!")
+                continue
+            
+            self.cpf = int(entrada)
+            return self.cpf
+    
 
     def ler_email(self):
         pass
@@ -123,6 +155,10 @@ class AlistamentoMilitar:
         self.limpar_tela()
         self.tela_de_apresentacao()
         self.ler_nome()
+        self.ler_data_nac()
+        self.ler_sexo()
+        self.ler_cpf()
+        self.ler_email()
 
 
 
